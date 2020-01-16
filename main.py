@@ -5,6 +5,7 @@ from json import dumps
 import pandas as pd
 from sklearn.metrics.pairwise import linear_kernel
 from sklearn.feature_extraction.text import TfidfVectorizer
+from pandas import DataFrame
 
 app = Flask(__name__)
 CORS(app)
@@ -12,9 +13,13 @@ CORS(app)
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 
 mydb = myclient["sac"]
+recipesCSV = pd.read_csv('recipes_updated.csv')
+# recipiesCollection = mydb["recipes"].find({})
+# dataframe = DataFrame(recipiesCollection)
+
 
 def recommender(list_ingredients):
-    recipes = pd.read_csv('recipes_updated.csv')
+    recipes = recipesCSV
     query_user = [{'Recipe_ID': 0, 'Ingredients': list_ingredients}]
     recipes = recipes.append(query_user, ignore_index=True, sort=False)
     recipes['Ingredients'] = ["".join(ingredient) for ingredient in recipes['Ingredients'].values]
