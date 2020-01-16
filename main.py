@@ -32,8 +32,9 @@ def recommender(list_ingredients):
     sim_scores = sim_scores[1:4]
     recipes_indices = [i[0] for i in sim_scores]
 
-    recommended_recipes_titles = recipes.iloc[recipes_indices]['Title'].tolist()
-    return recommended_recipes_titles
+    recommended_recipes = recipes.iloc[recipes_indices].to_json(orient='records')
+    print(recommended_recipes)
+    return recommended_recipes
 
 def addSpace(word):
     string2 = word
@@ -71,8 +72,9 @@ def post_ingredients():
     # mydoc = mycollection.find_one({"email": email})
     mycollection.update_one({"email": email}, {"$set": {"ingrdients": ingredients}})
     result = map(addSpace, ingredients)
-    suggestedRecipes = recommender(result)
-    return dumps(str(suggestedRecipes))
+    # suggestedRecipes = recommender(result)
+    # return dumps(str(suggestedRecipes))
+    return recommender(result)
 
 
 if __name__ == '__main__':

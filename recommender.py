@@ -26,7 +26,8 @@ def get_user_input_ingred():
 #     return input()
 
 # print('Add your desierd ingredients: ')
-ingredient_list_from_user = get_user_input_ingred()
+# ingredient_list_from_user = get_user_input_ingred()
+ingredient_list_from_user = [' apple', ' banana', ' flour', 'honey']
 # print(ingredient_list_from_user)
 #print('Select calories: ')
 # calories_wanted_user = get_user_wanted_calories()
@@ -68,19 +69,16 @@ def recommender(list_ingredients):
     # validation.append(sim_scores)
     recipes_indices = [i[0] for i in sim_scores]
 
-    recommended_recipes_titles = recipes.iloc[recipes_indices]['Title'].tolist()
+    recommended_recipes_titles = recipes.iloc[recipes_indices].to_json(orient='records')
 #    recommended_recipes_ingredients = recipes.iloc[recipes_indices]['Ingredients'].tolist()
     return recommended_recipes_titles
 #, recipes['Ingredients'].iloc[recipes_indices]
 
-print(type(ingredient_list_from_user))
-for x in ingredient_list_from_user:
-    print(type(x))
-print('What recipe do you like to try?')
 print(datetime.now())
 recommended_recipes = recommender(ingredient_list_from_user)
 print(datetime.now())
 print(recommended_recipes)
+print('What recipe do you like to try?')
 # print('Choose a recipe: ')
 # recipe_chosen = input()
 #
